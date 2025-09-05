@@ -26,6 +26,15 @@ namespace CLI.WordPress
                         var blog = new Blog();
                         blog.Title = Console.ReadLine();
                         blog.Content = Console.ReadLine();
+                        var maxId = -1;
+                        if (blogPosts.Any())
+                        {
+                            maxId = blogPosts.Select(b => b?.Id ?? -1).Max();
+                        } else
+                        {
+                            maxId = 0;
+                        }
+                        blog.Id = ++maxId;
                         blogPosts.Add(blog);
                         break;
                     case "R": 
@@ -40,6 +49,7 @@ namespace CLI.WordPress
                         break;
                     case "D": 
                     case "d":
+
                         break;
                     case "Q": 
                     case "q":
