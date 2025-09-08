@@ -40,6 +40,24 @@ namespace CLI.WordPress
                         break;
                     case "D": 
                     case "d":
+                    // give user options for deletion 
+                        blogPosts.ForEach(Console.WriteLine);
+                        Console.WriteLine("Blog to delete (Id):");
+
+                        // get selection from user
+                        var selection = Console.ReadLine();
+                        // make selection an int 
+                        if (int.TryParse(selection ?? "0", out int intSelection))
+                        {
+                            // get blog to delete 
+                            var blogToDelete = blogPosts
+                                // dont consider null blog
+                                .Where(b => b != null)
+                                // grab first that matches given id 
+                                .FirstOrDefault(b => b?.Id == intSelection);
+
+                            blogPosts.Remove(blogToDelete);
+                        }
                         break;
                     case "Q": 
                     case "q":
