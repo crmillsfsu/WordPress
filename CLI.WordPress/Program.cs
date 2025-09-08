@@ -26,6 +26,15 @@ namespace CLI.WordPress
                         var blog = new Blog();
                         blog.Title = Console.ReadLine();
                         blog.Content = Console.ReadLine();
+                        var maxId = -1;
+                        if (blogPosts.Any())
+                        {
+                            maxId = blogPosts.Select(b => b?.Id ?? -1).Max();
+                        } else
+                        {
+                            maxId = 0;
+                        }
+                        blog.Id = ++maxId;
                         blogPosts.Add(blog);
                         break;
                     case "R": 
@@ -40,6 +49,14 @@ namespace CLI.WordPress
                         break;
                     case "D": 
                     case "d":
+                        blogPosts.ForEach(Console.WriteLine);
+                        Console.WriteLine("Blog to Delete (Id):");
+                        var selection = Console.ReadLine();
+                        var intSelection = int.Parse(selection ?? "0");
+                        var blogToDelete = blogPosts
+                            .Where(b => b != null)
+                            .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                        blogPosts.Remove(blogToDelete);
                         break;
                     case "Q": 
                     case "q":
