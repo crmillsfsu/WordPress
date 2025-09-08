@@ -49,7 +49,14 @@ namespace CLI.WordPress
                         break;
                     case "D": 
                     case "d":
-
+                        blogPosts.ForEach(Console.WriteLine);
+                        Console.WriteLine("Blog to Delete (Id):");
+                        var selection = Console.ReadLine();
+                        var intSelection = int.Parse(selection ?? "0");
+                        var blogToDelete = blogPosts
+                            .Where(b => b != null)
+                            .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                        blogPosts.Remove(blogToDelete);
                         break;
                     case "Q": 
                     case "q":
