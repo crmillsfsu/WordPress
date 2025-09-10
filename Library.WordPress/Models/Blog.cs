@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return $"{Title} - {Content}";
+            return $"{Id}. {Title} - {Content}";
         }
 
     }
