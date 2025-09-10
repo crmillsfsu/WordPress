@@ -27,56 +27,48 @@ namespace CLI.WordPress
                         var blog = new Blog();
                         blog.Title = Console.ReadLine();
                         blog.Content = Console.ReadLine();
-                        var maxId = -1;
-                        if (blogPosts.Any())
-                        {
-                            maxId = blogPosts.Select(b => b?.Id ?? -1).Max();
-                        } else
-                        {
-                            maxId = 0;
-                        }
-                        blog.Id = ++maxId;
-                        blogPosts.Add(blog);
+                        BlogServiceProxy.Current.AddOrUpdate(blog);
                         break;
                     case "R": 
                     case "r":
-                        foreach(var b in blogPosts)
-                        {
-                            Console.WriteLine(b);
-                        }
+                        BlogServiceProxy.Current.Blogs.ForEach(Console.WriteLine);
                         break;
                     case "U": 
                     case "u":
                         {
-                            blogPosts.ForEach(Console.WriteLine);
+                            BlogServiceProxy.Current.Blogs.ForEach(Console.WriteLine);
                             Console.WriteLine("Blog to Update (Id):");
                             var selection = Console.ReadLine();
-                            if (int.TryParse(selection ?? "0", out int intSelection))
+                            if (int.TryParse(selection, out int intSelection))
                             {
+                                //get blog object
                                 var blogToUpdate = blogPosts
-                                   .Where(b => b != null)
-                                   .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                                    .Where(b => b != null)
+                                    .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                                //update it!
                                 if (blogToUpdate != null)
                                 {
                                     blogToUpdate.Title = Console.ReadLine();
                                     blogToUpdate.Content = Console.ReadLine();
                                 }
+                                BlogServiceProxy.Current.AddOrUpdate(blogToUpdate);
                             }
+                            
                             break;
                         }
                     case "D": 
                     case "d":
                         {
+                            //display noptions to delete
                             blogPosts.ForEach(Console.WriteLine);
-                            Console.WriteLine("Blog to De3lete (Id):");
+                            Console.WriteLine("Blog to Delete (Id):");
+                            //get the blog user wants to delete
                             var selection = Console.ReadLine();
-                            if(int.TryParse(selection ?? "0", out int intSelection)) {
-                                 var blogToDelete = blogPosts
-                                    .Where(b => b != null)
-                                    .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
-                                blogPosts.Remove(blogToDelete);
+                            if(int.TryParse(selection, out int intSelection))
+                            {
+                                BlogServiceProxy.Current.Delete(intSelection);
                             }
-                           
+
                             break;
                         }
                     case "Q": 
