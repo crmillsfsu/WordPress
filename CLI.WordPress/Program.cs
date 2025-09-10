@@ -1,4 +1,5 @@
 ﻿using Library.WordPress.Models;
+using Library.WordPress.Services;
 using System;
 
 namespace CLI.WordPress
@@ -8,7 +9,7 @@ namespace CLI.WordPress
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to WordPress!");
-            List<Blog?> blogPosts = new List<Blog?>();
+            List<Blog?> blogPosts = BlogServiceProxy.Current.Blogs;
             bool cont = true;
             do
             {
@@ -67,7 +68,7 @@ namespace CLI.WordPress
                     case "d":
                         {
                             blogPosts.ForEach(Console.WriteLine);
-                            Console.WriteLine("Blog to Delete (Id):");
+                            Console.WriteLine("Blog to De3lete (Id):");
                             var selection = Console.ReadLine();
                             if(int.TryParse(selection ?? "0", out int intSelection)) {
                                  var blogToDelete = blogPosts
