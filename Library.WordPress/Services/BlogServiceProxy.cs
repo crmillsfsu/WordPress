@@ -12,13 +12,17 @@ public class BlogServiceProxy
         blogPosts = new List<Blog?>();
     }
     private static BlogServiceProxy? instance;
+    private static object instanceLock = new object();
     public static BlogServiceProxy Current
     {
         get
         {
-            if (instance == null)
-            {
-                instance = new BlogServiceProxy();
+            lock(instanceLock)
+            { 
+                if (instance == null)
+                {
+                    instance = new BlogServiceProxy();
+                }
             }
 
             return instance;
