@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.WordPress.MainPage">
+    
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Label
+                Text="Word Press"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <ListView
+                ItemsSource="{Binding Blogs}"
+                SelectedItem="{Binding SelectedBlog}"
+                />
+
+            <Button Text="Add" Clicked="AddClicked"/>
+        </VerticalStackLayout>
+    
+    </ScrollView>
+
+</ContentPage>
