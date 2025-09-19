@@ -15,7 +15,7 @@ namespace Maui.WordPress
 
         private void AddClicked(object sender, EventArgs e)
         {
-
+            Shell.Current.GoToAsync("//Blog");
         }
 
     }
