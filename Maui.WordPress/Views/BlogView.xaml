@@ -4,9 +4,11 @@
              x:Class="Maui.WordPress.Views.BlogView"
              Title="BlogView">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="Title" />
+        <Entry Text="{Binding Title}"/>
+        <Label Text="Content"/>
+        <Entry Text="{Binding Content}"/>
+        <Button Text="Ok" Clicked="OkClicked"/>
+        <Button Text="Cancel" Clicked="CancelClicked"/>
     </VerticalStackLayout>
 </ContentPage>

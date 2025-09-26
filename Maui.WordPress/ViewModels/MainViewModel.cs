@@ -1,31 +1,37 @@
 ﻿using Library.WordPress.Models;
+using Library.WordPress.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Maui.WordPress.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
-        public List<Blog> Blogs
+        public ObservableCollection<Blog?> Blogs
         {
             get
             {
-                return new List<Blog>
-                {
-                    new Blog { Id = 1, Title = "Blog 1", Content = "Something great" }
-                    ,
-                    new Blog { Id = 2, Title = "Blog 2", Content = "Something great" }
-                    ,
-                    new Blog { Id = 3, Title = "Blog 3", Content = "Something great" }
-                    ,
-                    new Blog { Id = 4, Title = "Blog 4", Content = "Something great" }
-                };
+                return new ObservableCollection<Blog?>(BlogServiceProxy.Current.Blogs);
             }
         }
 
+        public void Refresh()
+        {
+            NotifyPropertyChanged("Blogs");
+        }
         public Blog? SelectedBlog { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
