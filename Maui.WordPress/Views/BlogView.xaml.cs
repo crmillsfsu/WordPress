@@ -3,9 +3,13 @@ using Library.WordPress.Services;
 
 namespace Maui.WordPress.Views;
 
+[QueryProperty(nameof(BlogId), "blogId")]
 public partial class BlogView : ContentPage
 {
-	public BlogView()
+
+    public int BlogId { get; set; }
+
+    public BlogView()
 	{
 		InitializeComponent();
 	}
@@ -28,6 +32,12 @@ public partial class BlogView : ContentPage
 
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
-        BindingContext = new Blog();
+        if (BlogId == 0)
+        {
+            BindingContext = new Blog();
+        } else
+        {
+            BindingContext = new Blog(BlogId);
+        }
     }
 }
