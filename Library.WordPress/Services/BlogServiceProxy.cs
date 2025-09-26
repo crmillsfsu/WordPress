@@ -58,8 +58,17 @@ public class BlogServiceProxy
             blog.Id = ++maxId;
             blogPosts.Add(blog);
         }
-
-        return blog;
+        else
+        {
+            var blogToEdit = Blogs.FirstOrDefault(b => (b?.Id ?? 0) == blog.Id);
+            if (blogToEdit != null)
+            {
+                var index = Blogs.IndexOf(blogToEdit);
+                Blogs.RemoveAt(index);
+                blogPosts.Insert(index, blog);
+            }
+        }
+            return blog;
     }
 
     public Blog? Delete(int id)
