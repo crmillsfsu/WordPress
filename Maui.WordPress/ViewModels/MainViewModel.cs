@@ -23,11 +23,22 @@ namespace Maui.WordPress.ViewModels
 
         public void Refresh()
         {
-            NotifyPropertyChanged("Blogs");
+            NotifyPropertyChanged(nameof(Blogs));
         }
         public Blog? SelectedBlog { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void Delete()
+        {
+            if(SelectedBlog == null)
+            {
+                return;
+            }
+
+            BlogServiceProxy.Current.Delete(SelectedBlog.Id);
+            NotifyPropertyChanged(nameof(Blogs));
+        }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

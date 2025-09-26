@@ -21,6 +21,11 @@ namespace Maui.WordPress
         {
             (BindingContext as MainViewModel).Refresh();
         }
+
+        private void DeleteClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel).Delete();
+        }
     }
 
 }
