@@ -8,7 +8,6 @@ public partial class BlogView : ContentPage
 	public BlogView()
 	{
 		InitializeComponent();
-        BindingContext = new Blog();
 	}
 
     private void CancelClicked(object sender, EventArgs e)
@@ -21,7 +20,14 @@ public partial class BlogView : ContentPage
         //add the blog
         BlogServiceProxy.Current.AddOrUpdate(BindingContext as Blog);
 
+
+
         //go back to the main page
         Shell.Current.GoToAsync("//MainPage");
+    }
+
+    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+    {
+        BindingContext = new Blog();
     }
 }
