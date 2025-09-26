@@ -1,11 +1,10 @@
 ﻿using Maui.WordPress.ViewModels;
+using System.ComponentModel;
 
 namespace Maui.WordPress
 {
     public partial class MainPage : ContentPage
     {
-
-
 
         public MainPage()
         {
@@ -15,9 +14,13 @@ namespace Maui.WordPress
 
         private void AddClicked(object sender, EventArgs e)
         {
-
+            Shell.Current.GoToAsync("//Blog");
         }
 
+        private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+        {
+            (BindingContext as MainViewModel).Refresh();
+        }
     }
 
 }

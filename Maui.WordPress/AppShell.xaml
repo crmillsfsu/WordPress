@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Maui.WordPress"
+    xmlns:view="clr-namespace:Maui.WordPress.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="Maui.WordPress">
 
@@ -11,5 +12,8 @@
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    <ShellContent
+        Title="BlogDetail"
+        ContentTemplate="{DataTemplate view:BlogView}"
+        Route="Blog" />
 </Shell>

@@ -66,4 +66,10 @@
 	  <ProjectReference Include="..\Library.WordPress\Library.WordPress.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\BlogView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
