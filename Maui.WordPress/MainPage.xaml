@@ -27,14 +27,14 @@
                                     <ColumnDefinition Width="5*"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Display}" Grid.Column="0"/>
+                                <Label Text="{Binding Model.Display}" Grid.Column="0"/>
                                 <Grid Grid.Column="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Text="Edit" Grid.Column="0" />
-                                    <Button Text="Delete" Grid.Column="1"/>
+                                    <Button Text="Edit" Grid.Column="0" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="Delete" Grid.Column="1" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                                 
                             </Grid>

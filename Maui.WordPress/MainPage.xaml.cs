@@ -29,8 +29,13 @@ namespace Maui.WordPress
 
         private void EditClicked(object sender, EventArgs e)
         {
-            var selectedId = (BindingContext as MainViewModel)?.SelectedBlog?.Id ?? 0;
+            var selectedId = (BindingContext as MainViewModel)?.SelectedBlog?.Model?.Id ?? 0;
             Shell.Current.GoToAsync($"//Blog?blogId={selectedId}");
+        }
+
+        private void InlineEditClicked(object sender, EventArgs e)
+        {
+
         }
     }
 
