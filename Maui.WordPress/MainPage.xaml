@@ -34,7 +34,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Button Text="Edit" Grid.Column="0" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="Delete" Grid.Column="1" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                    <Button Text="Delete" Grid.Column="1" Clicked="InlineEditClicked" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                                 
                             </Grid>

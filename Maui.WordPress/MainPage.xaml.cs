@@ -35,7 +35,7 @@ namespace Maui.WordPress
 
         private void InlineEditClicked(object sender, EventArgs e)
         {
-
+            (BindingContext as MainViewModel)?.Refresh();
         }
     }
 
