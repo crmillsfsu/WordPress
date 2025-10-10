@@ -37,6 +37,11 @@ namespace Maui.WordPress
         {
             (BindingContext as MainViewModel)?.Refresh();
         }
+
+        private void SearchClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel)?.Refresh();
+        }
     }
 
 }
