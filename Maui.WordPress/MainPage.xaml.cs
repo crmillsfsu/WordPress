@@ -42,6 +42,11 @@ namespace Maui.WordPress
         {
             (BindingContext as MainViewModel)?.Refresh();
         }
+
+        private void InlineAddClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel)?.AddInlineBlog();
+        }
     }
 
 }

@@ -51,6 +51,32 @@
                 </ListView.ItemTemplate>
             </ListView>
 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Title"/>
+                    <Entry Grid.Column="1" Text="{Binding InlineBlog.Model.Title}"/>
+                </Grid>
+                <Label Grid.Row="1" Text="Content"/>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Entry Grid.Column="0" Text="{Binding InlineBlog.Model.Content}"/>
+                    <Button Grid.Column="1" Clicked="InlineAddClicked" Text="+"/>
+                </Grid>
+
+            </Grid>
+            
             <Button Text="Add" Clicked="AddClicked"/>
             <Button Text="Edit" Clicked="EditClicked"/>
             <Button Text="Delete" Clicked="DeleteClicked"/>

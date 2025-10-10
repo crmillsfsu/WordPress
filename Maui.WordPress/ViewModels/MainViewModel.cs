@@ -13,6 +13,10 @@ namespace Maui.WordPress.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public MainViewModel()
+        {
+            InlineBlog = new BlogViewModel();
+        }
         public ObservableCollection<BlogViewModel?> Blogs
         {
             get
@@ -37,6 +41,8 @@ namespace Maui.WordPress.ViewModels
         public BlogViewModel? SelectedBlog { get; set; }
         public string? Query { get; set; }
 
+        public BlogViewModel? InlineBlog { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public void Delete()
@@ -48,6 +54,15 @@ namespace Maui.WordPress.ViewModels
 
             BlogServiceProxy.Current.Delete(SelectedBlog?.Model?.Id ?? 0);
             NotifyPropertyChanged(nameof(Blogs));
+        }
+
+        public void AddInlineBlog()
+        {
+            BlogServiceProxy.Current.AddOrUpdate(InlineBlog?.Model);
+            NotifyPropertyChanged(nameof(Blogs));
+
+            InlineBlog = new BlogViewModel();
+            NotifyPropertyChanged(nameof(InlineBlog));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
