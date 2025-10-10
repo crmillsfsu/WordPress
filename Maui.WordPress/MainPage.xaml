@@ -14,7 +14,15 @@
                 Text="Word Press"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Entry Grid.Column="0" Text="{Binding Query}"/>
+                <Button Grid.Column="1" Text="Search" Clicked="SearchClicked"/>
+            </Grid>
             <ListView
                 ItemsSource="{Binding Blogs}"
                 SelectedItem="{Binding SelectedBlog}"

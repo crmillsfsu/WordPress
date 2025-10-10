@@ -21,6 +21,10 @@ namespace Maui.WordPress.ViewModels
                     (BlogServiceProxy
                     .Current
                     .Blogs
+                    .Where(
+                        b => (b?.Title?.ToUpper()?.Contains(Query?.ToUpper() ?? string.Empty) ?? false)
+                        || (b?.Content?.ToUpper()?.Contains(Query?.ToUpper() ?? string.Empty) ?? false)
+                    )
                     .Select (b => new BlogViewModel (b))
                     );
             }
@@ -31,6 +35,7 @@ namespace Maui.WordPress.ViewModels
             NotifyPropertyChanged(nameof(Blogs));
         }
         public BlogViewModel? SelectedBlog { get; set; }
+        public string? Query { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
