@@ -16,6 +16,7 @@ namespace Maui.WordPress.ViewModels
         public MainViewModel()
         {
             InlineBlog = new BlogViewModel();
+            InlineCardVisibility = Visibility.Collapsed;
         }
         public ObservableCollection<BlogViewModel?> Blogs
         {
@@ -31,6 +32,24 @@ namespace Maui.WordPress.ViewModels
                     )
                     .Select (b => new BlogViewModel (b))
                     );
+            }
+        }
+
+        private Visibility inlineCardVisibility;
+        public Visibility InlineCardVisibility
+        {
+            get
+            {
+                return inlineCardVisibility;
+            }
+
+            set
+            {
+                if (inlineCardVisibility != value)
+                {
+                    inlineCardVisibility = value;
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -63,6 +82,13 @@ namespace Maui.WordPress.ViewModels
 
             InlineBlog = new BlogViewModel();
             NotifyPropertyChanged(nameof(InlineBlog));
+        }
+
+        public void ExpandCard()
+        {
+            InlineCardVisibility
+                = InlineCardVisibility == Visibility.Visible ?
+                Visibility.Collapsed : Visibility.Visible;
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

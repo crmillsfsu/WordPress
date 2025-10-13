@@ -6,82 +6,115 @@
              >
     
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Label
+    <!--<ScrollView>-->
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="25">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+        <!-- HEADER -->
+            <Grid Grid.Row="0">
+                <Label
                 Text="Word Press"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Entry Grid.Column="0" Text="{Binding Query}"/>
-                <Button Grid.Column="1" Text="Search" Clicked="SearchClicked"/>
             </Grid>
-            <ListView
+        
+        <!-- SEARCH BAR -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="0" Text="{Binding Query}"/>
+            <Button Grid.Column="1" Text="Search" Clicked="SearchClicked"/>
+        </Grid>
+            
+        <!-- BLOG LIST -->
+        <Grid Grid.Row="2">
+                <ListView
                 ItemsSource="{Binding Blogs}"
                 SelectedItem="{Binding SelectedBlog}"
                 >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Model.Display}" Grid.Column="0"/>
-                                <Grid Grid.Column="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="5*"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Text="Edit" Grid.Column="0" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
-                                    <Button Text="Delete" Grid.Column="1" Clicked="InlineEditClicked" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                    <Label Text="{Binding Model.Display}" Grid.Column="0"/>
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Text="Edit" Grid.Column="0" Command="{Binding EditCommand}" CommandParameter="{Binding}"/>
+                                        <Button Text="Delete" Grid.Column="1" Clicked="InlineEditClicked" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                    </Grid>
+
                                 </Grid>
-                                
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Title"/>
-                    <Entry Grid.Column="1" Text="{Binding InlineBlog.Model.Title}"/>
-                </Grid>
-                <Label Grid.Row="1" Text="Content"/>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Entry Grid.Column="0" Text="{Binding InlineBlog.Model.Content}"/>
-                    <Button Grid.Column="1" Clicked="InlineAddClicked" Text="+"/>
-                </Grid>
-
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
-            
-            <Button Text="Add" Clicked="AddClicked"/>
-            <Button Text="Edit" Clicked="EditClicked"/>
-            <Button Text="Delete" Clicked="DeleteClicked"/>
-        </VerticalStackLayout>
+            <!-- INLINE CARD -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Text="+" Clicked="ExpandCardClicked"/>
+            <Grid Grid.Row="1" x:Name="MyGrid" IsVisible="{Binding InlineCardVisibility}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="Title"/>
+                        <Entry Grid.Column="1" Text="{Binding InlineBlog.Model.Title}"/>
+                    </Grid>
+                    <Label Grid.Row="1" Text="Content"/>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Entry Grid.Column="0" Text="{Binding InlineBlog.Model.Content}"/>
+                        <Button Grid.Column="1" Clicked="InlineAddClicked" Text="+"/>
+                    </Grid>
+
+                </Grid>
+        </Grid>
+
+            <!-- BUTTON BAR -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Add" Clicked="AddClicked"/>
+            <Button Grid.Column="1" Text="Edit" Clicked="EditClicked"/>
+            <Button Grid.Column="2" Text="Delete" Clicked="DeleteClicked"/>
+        </Grid>
+    </Grid>
+    </VerticalStackLayout>
     
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </ContentPage>
