@@ -38,10 +38,14 @@
         </Grid>
             
         <!-- BLOG LIST -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2"
+              VerticalOptions="FillAndExpand"
+              >
                 <ListView
                 ItemsSource="{Binding Blogs}"
                 SelectedItem="{Binding SelectedBlog}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="False"
                 >
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -108,7 +112,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Add" Clicked="AddClicked"/>
+            <Button Grid.Column="0" Text="Add" Clicked="AddClicked" TextColor="Black" BackgroundColor="Chartreuse"/>
             <Button Grid.Column="1" Text="Edit" Clicked="EditClicked"/>
             <Button Grid.Column="2" Text="Delete" Clicked="DeleteClicked"/>
         </Grid>
