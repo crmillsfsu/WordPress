@@ -107,15 +107,31 @@
 
             <!-- BUTTON BAR -->
         <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Add" Clicked="AddClicked" TextColor="Black" BackgroundColor="Chartreuse"/>
-            <Button Grid.Column="1" Text="Edit" Clicked="EditClicked"/>
-            <Button Grid.Column="2" Text="Delete" Clicked="DeleteClicked"/>
-        </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="Add" Clicked="AddClicked" TextColor="Black" BackgroundColor="Chartreuse"/>
+                <Button Grid.Column="1" Text="Edit" Clicked="EditClicked"/>
+                <Button Grid.Column="2" Text="Delete" Clicked="DeleteClicked"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Export" Clicked="ExportClicked"/>
+                    <Button Grid.Column="1" Text="Import" Clicked="ImportClicked"/>
+                    <Entry Grid.Column="2" Text="{Binding ImportPath}"/>
+                </Grid>
+            </Grid>
     </Grid>
     </VerticalStackLayout>
     

@@ -1,5 +1,6 @@
 ﻿using Library.WordPress.Models;
 using Library.WordPress.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Maui.WordPress.ViewModels
@@ -17,6 +19,7 @@ namespace Maui.WordPress.ViewModels
         {
             InlineBlog = new BlogViewModel();
             InlineCardVisibility = Visibility.Collapsed;
+            ImportPath = @"C:\temp\data.json";
         }
         public ObservableCollection<BlogViewModel?> Blogs
         {
@@ -57,6 +60,45 @@ namespace Maui.WordPress.ViewModels
         {
             NotifyPropertyChanged(nameof(Blogs));
         }
+
+        public void Export()
+        {
+            var blogString = JsonConvert.SerializeObject(
+                Blogs
+                .Where(b => b!= null)
+                .Select(b => b.Model));
+
+            using (StreamWriter sw = new StreamWriter(@"C:\temp\data.json"))
+            {
+                sw.WriteLine(blogString);
+            }
+        }
+
+        public void Import()
+        {
+            using(StreamReader sr = new StreamReader(ImportPath))
+            {
+                var blogString = sr.ReadLine();
+                if(string.IsNullOrEmpty(blogString))
+                {
+                    return;
+                }
+
+                var blogs = JsonConvert.DeserializeObject<List<Blog>>(blogString);
+
+                foreach (var blog in blogs)
+                {
+                    blog.Id = 0;
+                    BlogServiceProxy.Current.AddOrUpdate(blog);
+                }
+                NotifyPropertyChanged(nameof(Blogs));
+            }
+
+            //var blogString = File.ReadAllText(ImportPath);
+            
+        }
+
+        public string ImportPath { get; set; }
         public BlogViewModel? SelectedBlog { get; set; }
         public string? Query { get; set; }
 

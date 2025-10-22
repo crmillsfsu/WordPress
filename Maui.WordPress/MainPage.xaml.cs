@@ -52,6 +52,16 @@ namespace Maui.WordPress
         {
             (BindingContext as MainViewModel)?.ExpandCard();
         }
+
+        private void ExportClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel)?.Export();
+        }
+
+        private void ImportClicked(object sender, EventArgs e)
+        {
+            (BindingContext as MainViewModel)?.Import();
+        }
     }
 
 }
