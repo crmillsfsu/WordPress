@@ -45,7 +45,7 @@ namespace Maui.WordPress
 
         private void InlineAddClicked(object sender, EventArgs e)
         {
-            (BindingContext as MainViewModel)?.AddInlineBlog();
+            var response = (BindingContext as MainViewModel)?.AddInlineBlog();   
         }
 
         private void ExpandCardClicked(object sender, EventArgs e)

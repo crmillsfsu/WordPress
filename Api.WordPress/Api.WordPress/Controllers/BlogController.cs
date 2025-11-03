@@ -1,6 +1,8 @@
-﻿using Api.WordPress.Enterprise;
+﻿using Api.WordPress.Database;
+using Api.WordPress.Enterprise;
 using Library.WordPress.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace Api.WordPress.Controllers
 {
@@ -33,5 +35,10 @@ namespace Api.WordPress.Controllers
             return new BlogEC().Delete(id);
         }
 
+        [HttpPost]
+        public Blog? AddOrUpdate([FromBody] Blog blog)
+        {
+            return new BlogEC().AddOrUpdate(blog);
+        }
     }
 }

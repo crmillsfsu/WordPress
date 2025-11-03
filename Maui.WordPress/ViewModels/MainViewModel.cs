@@ -117,13 +117,21 @@ namespace Maui.WordPress.ViewModels
             NotifyPropertyChanged(nameof(Blogs));
         }
 
-        public void AddInlineBlog()
+        public async Task<bool> AddInlineBlog()
         {
-            BlogServiceProxy.Current.AddOrUpdate(InlineBlog?.Model);
-            NotifyPropertyChanged(nameof(Blogs));
+            try
+            {
+                await BlogServiceProxy.Current.AddOrUpdate(InlineBlog?.Model);
+                NotifyPropertyChanged(nameof(Blogs));
 
-            InlineBlog = new BlogViewModel();
-            NotifyPropertyChanged(nameof(InlineBlog));
+                InlineBlog = new BlogViewModel();
+                NotifyPropertyChanged(nameof(InlineBlog));
+            } catch(Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void ExpandCard()

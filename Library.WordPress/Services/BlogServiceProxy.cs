@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using Library.WordPress.Models;
+using Library.WordPress.Utilities;
+using Newtonsoft.Json;
 
 namespace Library.WordPress.Services;
 
@@ -10,6 +12,11 @@ public class BlogServiceProxy
     private BlogServiceProxy()
     {
         blogPosts = new List<Blog?>();
+        var blogsResponse = new WebRequestHandler().Get("/Blog").Result;
+        if (blogsResponse != null)
+        {
+            blogPosts = JsonConvert.DeserializeObject<List<Blog?>>(blogsResponse) ?? new List<Blog?>();
+        }
     }
     private static BlogServiceProxy? instance;
     private static object instanceLock = new object();
@@ -37,26 +44,19 @@ public class BlogServiceProxy
         }
     }
 
-    public Blog? AddOrUpdate(Blog? blog)
+    public async Task<Blog?> AddOrUpdate(Blog? blog)
     {
         if (blog == null)
         {
             return null;
         }
 
+        var blogPayload = await new WebRequestHandler().Post("/Blog", blog);
+        var blogFromServer = JsonConvert.DeserializeObject<Blog>(blogPayload);
+
         if (blog.Id <= 0)
         {
-            var maxId = -1;
-            if (blogPosts.Any())
-            {
-                maxId = blogPosts.Select(b => b?.Id ?? -1).Max();
-            }
-            else
-            {
-                maxId = 0;
-            }
-            blog.Id = ++maxId;
-            blogPosts.Add(blog);
+            blogPosts.Add(blogFromServer);
         }
         else
         {
@@ -73,6 +73,7 @@ public class BlogServiceProxy
 
     public Blog? Delete(int id)
     {
+        var response = new WebRequestHandler().Delete($"/Blog/{id}").Result;
         //get blog object
         var blogToDelete = blogPosts
             .Where(b => b != null)
