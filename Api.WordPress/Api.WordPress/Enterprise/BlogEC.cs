@@ -60,5 +60,13 @@ namespace Api.WordPress.Enterprise
             }
             return blog;
         }
+
+        public List<Blog?> Search(string query)
+        {
+            return FakeDatabase.Blogs.Where(
+                        b => (b?.Title?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
+                        || (b?.Content?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
+                    );
+        }
     }
 }
