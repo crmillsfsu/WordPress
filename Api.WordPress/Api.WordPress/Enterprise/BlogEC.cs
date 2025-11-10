@@ -1,72 +1,53 @@
 ﻿using Api.WordPress.Database;
+using Library.WordPress.DTO;
 using Library.WordPress.Models;
 
 namespace Api.WordPress.Enterprise
 {
     public class BlogEC
     {
-        public IEnumerable<Blog> GetBlogs()
+        public IEnumerable<BlogDTO> GetBlogs()
         {
-            return FakeDatabase.Blogs
+            return Filebase.Current.Blogs
                 //.Where(b => b.UserId == CLAIM.UserId)
+                .Select(b => new BlogDTO(b))
                 .OrderByDescending(b => b.Id)
                 .Take(100);
         }
-        public Blog? GetById(int id)
+        public BlogDTO? GetById(int id)
         {
-            return FakeDatabase.Blogs.FirstOrDefault(b => b.Id == id);
+            var blog = Filebase.Current.Blogs.FirstOrDefault(b => b.Id == id);
+            return new BlogDTO(blog);
         }
 
-        public Blog? Delete(int id)
+        public BlogDTO? Delete(int id)
         {
-            var toRemove = GetById(id);
+            //var toRemove = GetById(id);
+            var toRemove = Filebase.Current.Blogs.FirstOrDefault(b => b.Id == id);
             if (toRemove != null)
             {
-                FakeDatabase.Blogs.Remove(toRemove);
+                Filebase.Current.Blogs.Remove(toRemove);
             }
-            return toRemove;
+            return new BlogDTO(toRemove);
         }
 
-        public Blog? AddOrUpdate(Blog? blog)
+        public BlogDTO? AddOrUpdate(BlogDTO? blogDTO)
         {
-            if (blog == null)
+            if (blogDTO == null)
             {
                 return null;
             }
-
-            if (blog.Id <= 0)
-            {
-                var maxId = -1;
-                if (FakeDatabase.Blogs.Any())
-                {
-                    maxId = FakeDatabase.Blogs.Select(b => b?.Id ?? -1).Max();
-                }
-                else
-                {
-                    maxId = 0;
-                }
-                blog.Id = ++maxId;
-                FakeDatabase.Blogs.Add(blog);
-            }
-            else
-            {
-                var blogToEdit = FakeDatabase.Blogs.FirstOrDefault(b => (b?.Id ?? 0) == blog.Id);
-                if (blogToEdit != null)
-                {
-                    var index = FakeDatabase.Blogs.IndexOf(blogToEdit);
-                    FakeDatabase.Blogs.RemoveAt(index);
-                    FakeDatabase.Blogs.Insert(index, blog);
-                }
-            }
-            return blog;
+            var blog = new Blog(blogDTO);
+            blogDTO = new BlogDTO(Filebase.Current.AddOrUpdate(blog));
+            return blogDTO;
         }
 
-        public List<Blog?> Search(string query)
+        public IEnumerable<BlogDTO?> Search(string query)
         {
-            return FakeDatabase.Blogs.Where(
+            return Filebase.Current.Blogs.Where(
                         b => (b?.Title?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
                         || (b?.Content?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
-                    );
+                    ).Select(b => new BlogDTO(b));
         }
     }
 }

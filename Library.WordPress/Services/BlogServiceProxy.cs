@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Library.WordPress.DTO;
 using Library.WordPress.Models;
 using Library.WordPress.Utilities;
 using Newtonsoft.Json;
@@ -8,14 +9,14 @@ namespace Library.WordPress.Services;
 
 public class BlogServiceProxy
 {
-    private List<Blog?> blogPosts;
+    private List<BlogDTO?> blogPosts;
     private BlogServiceProxy()
     {
-        blogPosts = new List<Blog?>();
+        blogPosts = new List<BlogDTO?>();
         var blogsResponse = new WebRequestHandler().Get("/Blog").Result;
         if (blogsResponse != null)
         {
-            blogPosts = JsonConvert.DeserializeObject<List<Blog?>>(blogsResponse) ?? new List<Blog?>();
+            blogPosts = JsonConvert.DeserializeObject<List<BlogDTO?>>(blogsResponse) ?? new List<BlogDTO?>();
         }
     }
     private static BlogServiceProxy? instance;
@@ -36,7 +37,7 @@ public class BlogServiceProxy
         }
     }
 
-    public List<Blog?> Blogs
+    public List<BlogDTO?> Blogs
     {
         get
         {
@@ -44,7 +45,7 @@ public class BlogServiceProxy
         }
     }
 
-    public async Task<Blog?> AddOrUpdate(Blog? blog)
+    public async Task<BlogDTO?> AddOrUpdate(BlogDTO? blog)
     {
         if (blog == null)
         {
@@ -52,7 +53,7 @@ public class BlogServiceProxy
         }
 
         var blogPayload = await new WebRequestHandler().Post("/Blog", blog);
-        var blogFromServer = JsonConvert.DeserializeObject<Blog>(blogPayload);
+        var blogFromServer = JsonConvert.DeserializeObject<BlogDTO>(blogPayload);
 
         if (blog.Id <= 0)
         {
@@ -71,7 +72,7 @@ public class BlogServiceProxy
             return blog;
     }
 
-    public Blog? Delete(int id)
+    public BlogDTO? Delete(int id)
     {
         var response = new WebRequestHandler().Delete($"/Blog/{id}").Result;
         //get blog object

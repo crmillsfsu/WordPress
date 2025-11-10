@@ -1,6 +1,6 @@
 ﻿using Library.WordPress.Models;
 
-namespace Api.WordPress.Database
+namespace Api.WordPress.Nonsense
 {
     public static class FakeDatabase
     {

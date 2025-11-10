@@ -1,4 +1,5 @@
-﻿using Library.WordPress.Services;
+﻿using Library.WordPress.DTO;
+using Library.WordPress.Services;
 
 namespace Library.WordPress.Models
 {
@@ -7,7 +8,12 @@ namespace Library.WordPress.Models
         public string? Title { get; set; }
         public string? Content {  get; set; }
         public int Id { get; set; }
-
+        public string LegacyData1 { get; set; }
+        public string LegacyData2 { get; set; }
+        public string LegacyData3 { get; set; }
+        public string LegacyData4 { get; set; }
+        public string LegacyData5 { get; set; }
+        public string LegacyData6 { get; set; }
         public string Display
         {
             get
@@ -20,9 +26,22 @@ namespace Library.WordPress.Models
             return $"{Id}. {Title} - {Content}";
         }
 
+        public Blog(BlogDTO blogDTO)
+        {
+            Id = blogDTO.Id;
+            Title = blogDTO.Title;
+            Content = blogDTO.Content;
+
+
+        }
         public Blog()
         {
-
+            LegacyData1 = string.Empty;
+            LegacyData2 = string.Empty;
+            LegacyData3 = string.Empty;
+            LegacyData4 = string.Empty;
+            LegacyData5 = string.Empty;
+            LegacyData6 = string.Empty;
         }
         public Blog(int id)
         {
@@ -34,6 +53,13 @@ namespace Library.WordPress.Models
                 Title = blogCopy.Title;
                 Content = blogCopy.Content;
             }
+
+            LegacyData1 = string.Empty;
+            LegacyData2 = string.Empty;
+            LegacyData3 = string.Empty;
+            LegacyData4 = string.Empty;
+            LegacyData5 = string.Empty;
+            LegacyData6 = string.Empty;
         }
     }
 }

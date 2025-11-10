@@ -1,4 +1,5 @@
-﻿using Library.WordPress.Models;
+﻿using Library.WordPress.DTO;
+using Library.WordPress.Models;
 using Library.WordPress.Services;
 using Newtonsoft.Json;
 using System;
@@ -84,7 +85,7 @@ namespace Maui.WordPress.ViewModels
                     return;
                 }
 
-                var blogs = JsonConvert.DeserializeObject<List<Blog>>(blogString);
+                var blogs = JsonConvert.DeserializeObject<List<BlogDTO>>(blogString);
 
                 foreach (var blog in blogs)
                 {

@@ -1,3 +1,4 @@
+using Library.WordPress.DTO;
 using Library.WordPress.Models;
 using Library.WordPress.Services;
 
@@ -22,7 +23,7 @@ public partial class BlogView : ContentPage
     private void OkClicked(object sender, EventArgs e)
     {
         //add the blog
-        BlogServiceProxy.Current.AddOrUpdate(BindingContext as Blog);
+        BlogServiceProxy.Current.AddOrUpdate(BindingContext as BlogDTO);
 
 
 
@@ -34,10 +35,10 @@ public partial class BlogView : ContentPage
     {
         if (BlogId == 0)
         {
-            BindingContext = new Blog();
+            BindingContext = new BlogDTO();
         } else
         {
-            BindingContext = new Blog(BlogId);
+            BindingContext = new BlogDTO(BlogId);
         }
     }
 }

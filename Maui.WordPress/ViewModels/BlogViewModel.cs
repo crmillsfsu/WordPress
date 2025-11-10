@@ -1,4 +1,5 @@
-﻿using Library.WordPress.Models;
+﻿using Library.WordPress.DTO;
+using Library.WordPress.Models;
 using Library.WordPress.Services;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace Maui.WordPress.ViewModels
     public class BlogViewModel
     {
         public BlogViewModel() {
-            Model = new Blog();
+            Model = new BlogDTO();
             SetUpCommands();
         }
 
-        public BlogViewModel(Blog? model)
+        public BlogViewModel(BlogDTO? model)
         {
             Model = model;
             SetUpCommands();
@@ -47,7 +48,7 @@ namespace Maui.WordPress.ViewModels
             Shell.Current.GoToAsync($"//Blog?blogId={selectedId}");
         }
 
-        public Blog? Model { get; set; }
+        public BlogDTO? Model { get; set; }
 
 
         public ICommand? DeleteCommand { get; set; }
