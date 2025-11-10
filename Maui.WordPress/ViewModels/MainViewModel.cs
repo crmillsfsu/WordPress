@@ -21,12 +21,8 @@ namespace Maui.WordPress.ViewModels
             InlineBlog = new BlogViewModel();
             InlineCardVisibility = Visibility.Collapsed;
             ImportPath = @"C:\temp\data.json";
-        }
-        public ObservableCollection<BlogViewModel?> Blogs
-        {
-            get
-            {
-                return new ObservableCollection<BlogViewModel?>
+
+            blogs = new ObservableCollection<BlogViewModel?>
                     (BlogServiceProxy
                     .Current
                     .Blogs
@@ -34,8 +30,16 @@ namespace Maui.WordPress.ViewModels
                         b => (b?.Title?.ToUpper()?.Contains(Query?.ToUpper() ?? string.Empty) ?? false)
                         || (b?.Content?.ToUpper()?.Contains(Query?.ToUpper() ?? string.Empty) ?? false)
                     )
-                    .Select (b => new BlogViewModel (b))
+                    .Select(b => new BlogViewModel(b))
                     );
+        }
+
+        private ObservableCollection<BlogViewModel?> blogs;
+        public ObservableCollection<BlogViewModel?> Blogs
+        {
+            get
+            {
+                return blogs;
             }
         }
 
@@ -59,6 +63,13 @@ namespace Maui.WordPress.ViewModels
 
         public void Refresh()
         {
+            NotifyPropertyChanged(nameof(Blogs));
+        }
+
+        public void Search()
+        {
+            var blogDTOs = BlogServiceProxy.Current.Search(new Library.WordPress.Data.QueryRequest { Content = Query }).Result;
+            blogs = new ObservableCollection<BlogViewModel?>(blogDTOs.Select(b=> new BlogViewModel(b)));
             NotifyPropertyChanged(nameof(Blogs));
         }
 

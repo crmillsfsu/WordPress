@@ -40,7 +40,7 @@ namespace Maui.WordPress
 
         private void SearchClicked(object sender, EventArgs e)
         {
-            (BindingContext as MainViewModel)?.Refresh();
+            (BindingContext as MainViewModel)?.Search();
         }
 
         private void InlineAddClicked(object sender, EventArgs e)
