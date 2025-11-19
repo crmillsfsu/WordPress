@@ -1,9 +1,11 @@
-using System;
-using System.ComponentModel;
+using Library.WordPress.Data;
 using Library.WordPress.DTO;
 using Library.WordPress.Models;
 using Library.WordPress.Utilities;
 using Newtonsoft.Json;
+using System;
+using System.ComponentModel;
+using System.Reflection.Metadata;
 
 namespace Library.WordPress.Services;
 
@@ -83,5 +85,14 @@ public class BlogServiceProxy
         blogPosts.Remove(blogToDelete);
 
         return blogToDelete;
+    }
+
+    public async Task<List<BlogDTO>> Search(QueryRequest query)
+    {
+        var blogPayload = await new WebRequestHandler().Post("/Blog/Search", query);
+        var blogFromServer = JsonConvert.DeserializeObject<List<BlogDTO?>>(blogPayload);
+
+        blogPosts = blogFromServer;
+        return blogPosts;
     }
 }
