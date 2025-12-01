@@ -8,7 +8,7 @@ namespace Api.WordPress.Enterprise
     {
         public IEnumerable<BlogDTO> GetBlogs()
         {
-            return Filebase.Current.Blogs
+            return SqlServerContext.Current.Read()
                 //.Where(b => b.UserId == CLAIM.UserId)
                 .Select(b => new BlogDTO(b))
                 .OrderByDescending(b => b.Id)
@@ -38,13 +38,21 @@ namespace Api.WordPress.Enterprise
                 return null;
             }
             var blog = new Blog(blogDTO);
+            if(blog.Id == 0)
+            {
+                blogDTO = new BlogDTO(SqlServerContext.Current.Create(blog));
+            }
             blogDTO = new BlogDTO(Filebase.Current.AddOrUpdate(blog));
             return blogDTO;
         }
 
         public IEnumerable<BlogDTO?> Search(string query)
         {
-            return Filebase.Current.Blogs.Where(
+            /*return Filebase.Current.Blogs.Where(
+                        b => (b?.Title?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
+                        || (b?.Content?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
+                    ).Select(b => new BlogDTO(b));*/
+            return SqlServerContext.Current.Read().Where(
                         b => (b?.Title?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
                         || (b?.Content?.ToUpper()?.Contains(query?.ToUpper() ?? string.Empty) ?? false)
                     ).Select(b => new BlogDTO(b));
